@@ -24,12 +24,11 @@
             });
 
             if (response.status === 200) {
-                // Successfully logged out
                 alert("Logged out successfully!");
                 window.location.href = "MainScreen.html";
             } else {
                 const data = await response.json();
-                alert("Error: " + data.message);
+                alert("Error: ",data.message);
             }
         } catch (error) {
             console.error("Error logging out:", error);
