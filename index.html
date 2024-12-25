@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Express Authentication</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+<body>
+    <div id="app">
+        <p>Loading...</p>
+    </div>
+</body>
+</html>
+<script>
+    window.onload = async() =>{
+    try{
+        const response = await fetch("http://localhost:5000/Users/checkSession",{method: 'GET'});
+        if(response.status===200){
+            const data = await response.json()
+            const isLoggedIn = data.loggedIn;
+            if(!isLoggedIn){
+                window.location.href = "MainScreen.html"
+            }
+            if(isLoggedIn){
+                window.location.href = "HomeScreen.html"
+            }
+        }
+        else{
+            console.log("req not successful. Response: ",response);
+        }
+    }
+    catch(e){
+        console.log("error: ",e);
+    }
+
+    }
+</script>

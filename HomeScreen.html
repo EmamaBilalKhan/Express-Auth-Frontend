@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Express Authentication</title>
+        <link rel="stylesheet" href="HomeScreen.css">
+    </head>
+<body>
+        <h1>Hello!</h1>
+        <button id="logout">Log Out</button>
+</body>
+</html>
+<script>
+    const logOutButton = document.getElementById("logout");
+
+    logOutButton.addEventListener('click', async () => {
+        try {
+            const response = await fetch("http://localhost:5000/Users/logout", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status === 200) {
+                // Successfully logged out
+                alert("Logged out successfully!");
+                window.location.href = "MainScreen.html";
+            } else {
+                const data = await response.json();
+                alert("Error: " + data.message);
+            }
+        } catch (error) {
+            console.error("Error logging out:", error);
+            alert("An error occurred during logout.");
+        }
+    });
+</script>

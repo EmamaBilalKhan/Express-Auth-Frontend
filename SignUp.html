@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Express Authentication</title>
+        <link rel="stylesheet" href="Login.css">
+    </head>
+<body>
+        <form>
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter your username">
+            <br><br>
+            <label>Password</label>
+            <input id="password" type="password" placeholder="Enter your Password">
+        </form>
+        <button id="SignUp">Sign Up</button>
+</body>
+</html>
+<script>
+    const signUpButton = document.getElementById("SignUp");
+    signUpButton.addEventListener('click', async (event) => {
+
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (username && password) {
+            try {
+                const response = await fetch("http://localhost:5000/Users/createUser", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+                if (response.status === 201) {
+                    const data = await response.json();
+                    alert("User successfully created!");
+                    window.location.href = "MainScreen.html";
+                } 
+                else {
+                    const data = await response.json();
+                    alert(`Error: ${data.message}`);
+                }
+            } 
+            catch(err){
+                console.error("Error creating user:", err);
+                alert("An error occurred while creating the user.");
+            }
+        } else {
+            alert("Please fill in both fields.");
+        }
+    });
+</script>
+
